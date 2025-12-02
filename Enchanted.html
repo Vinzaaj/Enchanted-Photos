@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools HD Gambar by Vinza</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-red: #ff3366;
+            --primary-pink: #ff66a3;
+            --dark-red: #cc0044;
+            --light-pink: #ffccdd;
+            --background: #1a0011;
+            --card-bg: #2d0a1f;
+            --text-light: #ffffff;
+            --text-gray: #e0cce0;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 51, 102, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 102, 163, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            animation: fadeInDown 1s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-right: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--primary-red), var(--primary-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .by-vinza {
+            color: var(--primary-pink);
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .by-vinza::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-pink), transparent);
+            bottom: -5px;
+            left: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Upload Section */
+        .upload-section, .preview-section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            color: var(--primary-pink);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed var(--primary-red);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+
+        .upload-area:hover {
+            background-color: rgba(255, 51, 102, 0.05);
+            border-color: var(--primary-pink);
+            transform: translateY(-5px);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .upload-note {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Quality Selection */
+        .quality-selection {
+            margin-bottom: 25px;
+        }
+
+        .quality-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .quality-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quality-option {
+            background-color: rgba(255, 51, 102, 0.1);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quality-option:hover {
+            background-color: rgba(255, 51, 102, 0.2);
+            border-color: var(--primary-red);
+        }
+
+        .quality-option.selected {
+            background-color: rgba(255, 51, 102, 0.3);
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 15px rgba(255, 102, 163, 0.5);
+        }
+
+        .quality-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .quality-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Controls */
+        .controls {
+            margin-bottom: 25px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .control-value {
+            color: var(--primary-pink);
+            font-weight: bold;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, var(--primary-red), var(--primary-pink));
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-red), var(--primary-pink));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(255, 51, 102, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        /* Preview Section */
+        .image-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            border: 2px solid rgba(255, 51, 102, 0.3);
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .placeholder-image {
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        .placeholder-image i {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            color: rgba(255, 102, 163, 0.3);
+        }
+
+        /* Loading Animation */
+        .loading-container {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 51, 102, 0.2);
+            border-top: 5px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--primary-pink);
+        }
+
+        /* Download Section */
+        .download-section {
+            background: linear-gradient(to right, rgba(255, 51, 102, 0.1), rgba(255, 102, 163, 0.1));
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 2px dashed var(--primary-pink);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .download-icon {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            margin-bottom: 15px;
+        }
+
+        .download-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px 0;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 51, 102, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 102, 163, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-magic logo-icon"></i>
+                <h1>Tools HD Gambar</h1>
+            </div>
+            <p class="subtitle">Tingkatkan kualitas gambar dengan teknologi AI</p>
+            <p class="by-vinza">by Vinza</p>
+        </header>
+
+        <main class="main-content">
+            <section class="upload-section">
+                <h2 class="section-title"><i class="fas fa-upload"></i> Unggah Gambar</h2>
+                
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p class="upload-text">Klik atau tarik gambar ke sini</p>
+                    <p class="upload-note">Format yang didukung: JPG, PNG, GIF (Maks. 5MB)</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+
+                <div class="quality-selection">
+                    <h3 class="section-title"><i class="fas fa-tachometer-alt"></i> Kualitas Hasil</h3>
+                    <div class="quality-options">
+                        <div class="quality-option" data-quality="hd">
+                            <div class="quality-name">HD</div>
+                            <div class="quality-desc">1280 × 720px</div>
+                        </div>
+                        <div class="quality-option selected" data-quality="ultra-hd">
+                            <div class="quality-name">Ultra HD</div>
+                            <div class="quality-desc">1920 × 1080px</div>
+                        </div>
+                        <div class="quality-option" data-quality="4k">
+                            <div class="quality-name">4K</div>
+                            <div class="quality-desc">3840 × 2160px</div>
+                        </div>
+                        <div class="quality-option" data-quality="original">
+                            <div class="quality-name">Original</div>
+                            <div class="quality-desc">Ukuran asli</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <h3 class="section-title"><i class="fas fa-sliders-h"></i> Pengaturan Gambar</h3>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Kontras</span>
+                            <span class="control-value" id="contrastValue">100%</span>
+                        </div>
+                        <input type="range" min="50" max="150" value="100" class="slider" id="contrastSlider">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Kecerahan</span>
+                            <span class="control-value" id="brightnessValue">100%</span>
+                        </div>
+                        <input type="range" min="50" max="150" value="100" class="slider" id="brightnessSlider">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Ketajaman</span>
+                            <span class="control-value" id="sharpnessValue">50%</span>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider" id="sharpnessSlider">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="enhanceBtn">
+                        <i class="fas fa-bolt"></i> Perjelas Gambar
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </section>
+
+            <section class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Preview Hasil</h2>
+                
+                <div class="image-container">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gambar akan muncul di sini setelah diunggah</p>
+                    </div>
+                    <img id="previewImage" alt="Preview Gambar">
+                </div>
+
+                <div class="loading-container" id="loadingContainer">
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">Sedang memproses gambar dengan AI...</p>
+                </div>
+
+                <div class="download-section" id="downloadSection">
+                    <i class="fas fa-download download-icon"></i>
+                    <p class="download-text">Gambar Anda sudah siap diunduh!</p>
+                    <button class="btn btn-primary" id="downloadBtn">
+                        <i class="fas fa-download"></i> Unduh Gambar HD
+                    </button>
+                </div>
+
+                <div class="image-info" id="imageInfo">
+                    <p><i class="fas fa-info-circle"></i> Unggah gambar untuk memulai proses peningkatan kualitas</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Tools HD Gambar by Vinza &copy; 2023 | Gunakan teknologi AI untuk meningkatkan kualitas gambar Anda</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const previewImage = document.getElementById('previewImage');
+        const enhanceBtn = document.getElementById('enhanceBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const downloadSection = document.getElementById('downloadSection');
+        const qualityOptions = document.querySelectorAll('.quality-option');
+        
+        // Sliders
+        const contrastSlider = document.getElementById('contrastSlider');
+        const brightnessSlider = document.getElementById('brightnessSlider');
+        const sharpnessSlider = document.getElementById('sharpnessSlider');
+        
+        // Values display
+        const contrastValue = document.getElementById('contrastValue');
+        const brightnessValue = document.getElementById('brightnessValue');
+        const sharpnessValue = document.getElementById('sharpnessValue');
+        
+        // State variables
+        let originalImage = null;
+        let processedImage = null;
+        let selectedQuality = 'ultra-hd';
+        let imageFileName = '';
+        
+        // Event Listeners
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary-pink)';
+            uploadArea.style.backgroundColor = 'rgba(255, 102, 163, 0.1)';
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = 'var(--primary-red)';
+            uploadArea.style.backgroundColor = '';
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary-red)';
+            uploadArea.style.backgroundColor = '';
+            
+            if (e.dataTransfer.files.length) {
+                handleImageUpload(e.dataTransfer.files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleImageUpload(e.target.files[0]);
+            }
+        });
+        
+        // Quality selection
+        qualityOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                qualityOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedQuality = option.getAttribute('data-quality');
+            });
+        });
+        
+        // Slider events
+        contrastSlider.addEventListener('input', () => {
+            contrastValue.textContent = `${contrastSlider.value}%`;
+            applyImageAdjustments();
+        });
+        
+        brightnessSlider.addEventListener('input', () => {
+            brightnessValue.textContent = `${brightnessSlider.value}%`;
+            applyImageAdjustments();
+        });
+        
+        sharpnessSlider.addEventListener('input', () => {
+            sharpnessValue.textContent = `${sharpnessSlider.value}%`;
+            applyImageAdjustments();
+        });
+        
+        // Enhance button
+        enhanceBtn.addEventListener('click', () => {
+            if (!originalImage) {
+                alert('Silakan unggah gambar terlebih dahulu!');
+                return;
+            }
+            
+            // Show loading animation
+            loadingContainer.style.display = 'block';
+            downloadSection.style.display = 'none';
+            
+            // Simulate AI processing with delay
+            setTimeout(() => {
+                // Simulate AI enhancement
+                enhanceImageWithAI();
+                
+                // Hide loading and show download section
+                loadingContainer.style.display = 'none';
+                downloadSection.style.display = 'block';
+                
+                // Animate the download section
+                downloadSection.style.animation = 'glow 2s infinite';
+            }, 2500);
+        });
+        
+        // Reset button
+        resetBtn.addEventListener('click', () => {
+            resetImageAdjustments();
+        });
+        
+        // Download button
+        downloadBtn.addEventListener('click', () => {
+            downloadEnhancedImage();
+        });
+        
+        // Functions
+        function handleImageUpload(file) {
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimum 5MB.');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                alert('File harus berupa gambar.');
+                return;
+            }
+            
+            imageFileName = file.name;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImage = new Image();
+                originalImage.onload = () => {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    document.querySelector('.placeholder-image').style.display = 'none';
+                    
+                    // Reset adjustments
+                    resetImageAdjustments();
+                    
+                    // Show image info
+                    document.getElementById('imageInfo').innerHTML = `
+                        <p><i class="fas fa-info-circle"></i> Gambar berhasil diunggah (${originalImage.width} × ${originalImage.height}px)</p>
+                    `;
+                    
+                    // Hide download section if it's visible
+                    downloadSection.style.display = 'none';
+                };
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function applyImageAdjustments() {
+            if (!originalImage) return;
+            
+            // Create a canvas to apply adjustments
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions based on selected quality
+            let width = originalImage.width;
+            let height = originalImage.height;
+            
+            switch(selectedQuality) {
+                case 'hd':
+                    width = 1280;
+                    height = Math.round(originalImage.height * (1280 / originalImage.width));
+                    break;
+                case 'ultra-hd':
+                    width = 1920;
+                    height = Math.round(originalImage.height * (1920 / originalImage.width));
+                    break;
+                case '4k':
+                    width = 3840;
+                    height = Math.round(originalImage.height * (3840 / originalImage.width));
+                    break;
+                // For 'original', keep original dimensions
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Apply contrast and brightness using CSS filters
+            const contrast = parseInt(contrastSlider.value) / 100;
+            const brightness = parseInt(brightnessSlider.value) / 100;
+            
+            // Draw the image with adjustments
+            ctx.filter = `contrast(${contrast}) brightness(${brightness})`;
+            ctx.drawImage(originalImage, 0, 0, width, height);
+            
+            // For sharpness, we'll simulate with a simple convolution
+            // In a real app, you would use more sophisticated sharpening algorithms
+            if (parseInt(sharpnessSlider.value) > 50) {
+                // Simple sharpening effect
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const sharpenedData = simpleSharpen(imageData, parseInt(sharpnessSlider.value) / 100);
+                ctx.putImageData(sharpenedData, 0, 0);
+            }
+            
+            // Update the preview
+            previewImage.src = canvas.toDataURL('image/jpeg', 0.9);
+            processedImage = previewImage.src;
+        }
+        
+        function simpleSharpen(imageData, strength) {
+            // Simple sharpen filter (basic implementation)
+            const data = imageData.data;
+            const width = imageData.width;
+            const height = imageData.height;
+            
+            // Create a copy of the original data
+            const originalData = new Uint8ClampedArray(data);
+            
+            // Apply simple sharpen kernel
+            for (let y = 1; y < height - 1; y++) {
+                for (let x = 1; x < width - 1; x++) {
+                    const idx = (y * width + x) * 4;
+                    
+                    // Get surrounding pixels
+                    const topIdx = ((y-1) * width + x) * 4;
+                    const bottomIdx = ((y+1) * width + x) * 4;
+                    const leftIdx = (y * width + (x-1)) * 4;
+                    const rightIdx = (y * width + (x+1)) * 4;
+                    
+                    // Apply simple sharpen (center pixel * 5 - surrounding pixels)
+                    for (let i = 0; i < 3; i++) {
+                        const newValue = originalData[idx + i] * (1 + strength * 4) - 
+                                        (originalData[topIdx + i] + originalData[bottomIdx + i] + 
+                                         originalData[leftIdx + i] + originalData[rightIdx + i]) * strength;
+                        
+                        data[idx + i] = Math.min(255, Math.max(0, newValue));
+                    }
+                }
+            }
+            
+            return imageData;
+        }
+        
+        function enhanceImageWithAI() {
+            // Simulate AI enhancement
+            // In a real application, this would call an AI API
+            // For this demo, we'll just apply stronger adjustments
+            
+            // Increase contrast and sharpness for "AI effect"
+            contrastSlider.value = 120;
+            brightnessSlider.value = 110;
+            sharpnessSlider.value = 80;
+            
+            contrastValue.textContent = `${contrastSlider.value}%`;
+            brightnessValue.textContent = `${brightnessSlider.value}%`;
+            sharpnessValue.textContent = `${sharpnessSlider.value}%`;
+            
+            applyImageAdjustments();
+            
+            // Show success message
+            document.getElementById('imageInfo').innerHTML = `
+                <p><i class="fas fa-check-circle" style="color: var(--primary-pink);"></i> 
+                Gambar berhasil ditingkatkan dengan AI! Kualitas ${selectedQuality.toUpperCase()} siap diunduh.</p>
+            `;
+        }
+        
+        function resetImageAdjustments() {
+            contrastSlider.value = 100;
+            brightnessSlider.value = 100;
+            sharpnessSlider.value = 50;
+            
+            contrastValue.textContent = `${contrastSlider.value}%`;
+            brightnessValue.textContent = `${brightnessSlider.value}%`;
+            sharpnessValue.textContent = `${sharpnessSlider.value}%`;
+            
+            if (originalImage) {
+                previewImage.src = originalImage.src;
+            }
+        }
+        
+        function downloadEnhancedImage() {
+            if (!processedImage && !originalImage) {
+                alert('Tidak ada gambar untuk diunduh.');
+                return;
+            }
+            
+            // Create a temporary link for download
+            const link = document.createElement('a');
+            link.href = processedImage || originalImage.src;
+            
+            // Create filename with quality indicator
+            const nameWithoutExt = imageFileName.substring(0, imageFileName.lastIndexOf('.'));
+            const extension = imageFileName.substring(imageFileName.lastIndexOf('.'));
+            const qualityText = selectedQuality === 'ultra-hd' ? 'Ultra-HD' : 
+                               selectedQuality === '4k' ? '4K' : 
+                               selectedQuality === 'hd' ? 'HD' : 'Enhanced';
+            
+            link.download = `${nameWithoutExt}_${qualityText}${extension}`;
+            
+            // Trigger download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show download confirmation
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-check"></i> Berhasil Diunduh!';
+            downloadBtn.style.background = 'linear-gradient(to right, #4CAF50, #45a049)';
+            
+            setTimeout(() => {
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.style.background = '';
+            }, 2000);
+        }
+        
+        // Initialize
+        resetImageAdjustments();
+    </script>
+</body>
+</html>
